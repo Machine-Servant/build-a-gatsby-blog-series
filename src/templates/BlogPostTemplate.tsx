@@ -1,5 +1,6 @@
 import { MDXProvider } from '@mdx-js/react';
 import { graphql, PageProps } from 'gatsby';
+import { getImage } from 'gatsby-plugin-image';
 import React from 'react';
 import { components, MainContent } from '../components/mdx-components';
 import { PageLayout } from '../components/page-layout';
@@ -8,12 +9,16 @@ const BlogPostTemplate: React.FC<PageProps<Queries.BlogPostQuery>> = ({
   data,
   children,
 }) => {
+  const featuredImage = data.mdx?.frontmatter?.featuredImage
+    ? getImage(data.mdx.frontmatter.featuredImage.childImageSharp)
+    : null;
+
   return (
-    <PageLayout>
+    <PageLayout
+      image={featuredImage}
+      title={data.mdx?.frontmatter?.title ?? undefined}
+    >
       <MainContent>
-        <h1 className="mb-8 text-4xl font-bold sm:text-5xl">
-          {data.mdx?.frontmatter?.title}
-        </h1>
         <div className="mb-8">
           <span className="text-sm font-thin">
             By {data.mdx?.frontmatter?.author} on {data.mdx?.frontmatter?.date}
@@ -34,6 +39,11 @@ export const query = graphql`
         title
         author
         date(formatString: "MMMM DD, YYYY")
+        featuredImage {
+          childImageSharp {
+            gatsbyImageData(layout: FULL_WIDTH)
+          }
+        }
       }
     }
   }

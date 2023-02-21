@@ -7,11 +7,13 @@ const AboutPage: React.FC<PageProps<Queries.AboutPageQuery>> = ({ data }) => {
   const profileImage = data.profileImage
     ? getImage(data.profileImage.childImageSharp)
     : null;
+  const headerImage = data.headerImage
+    ? getImage(data.headerImage.childImageSharp)
+    : null;
 
   return (
-    <PageLayout>
+    <PageLayout image={headerImage} title="About Us">
       <div className="container mx-auto px-4 lg:px-0">
-        <h1 className="mb-8 text-4xl font-bold lg:text-5xl">About Us</h1>
         <span className="text-lg">
           Welcome to our blog's "About" page! We're glad you're here. This page
           is all about us, the people behind the blog. We're passionate about
@@ -47,6 +49,11 @@ export default AboutPage;
 export const pageQuery = graphql`
   query AboutPage {
     profileImage: file(relativePath: { eq: "profile.jpg" }) {
+      childImageSharp {
+        gatsbyImageData(layout: FULL_WIDTH)
+      }
+    }
+    headerImage: file(relativePath: { eq: "header.jpg" }) {
       childImageSharp {
         gatsbyImageData(layout: FULL_WIDTH)
       }
