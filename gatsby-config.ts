@@ -5,6 +5,9 @@ const config: GatsbyConfig = {
     title: `My Gatsby Blog`,
     siteUrl: `https://www.yourdomain.tld`,
     author: 'John Smith',
+    description:
+      'Follow my journey building a stunning and performant blog with GatsbyJS! Get tips and insights on web development, design, and more.',
+    image: 'featured.jpg',
     navigation: [
       {
         name: 'About',
@@ -24,6 +27,7 @@ const config: GatsbyConfig = {
     'gatsby-plugin-emotion',
     'gatsby-plugin-postcss',
     'gatsby-plugin-image',
+    'gatsby-plugin-sitemap',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {

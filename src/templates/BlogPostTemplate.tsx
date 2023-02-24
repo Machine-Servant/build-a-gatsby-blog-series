@@ -1,7 +1,8 @@
 import { MDXProvider } from '@mdx-js/react';
-import { graphql, PageProps } from 'gatsby';
+import { graphql, HeadFC, PageProps } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
 import React from 'react';
+import { CustomHead } from '../components/custom-head';
 import { components, MainContent } from '../components/mdx-components';
 import { PageLayout } from '../components/page-layout';
 
@@ -35,6 +36,7 @@ export default BlogPostTemplate;
 export const query = graphql`
   query BlogPost($id: String!) {
     mdx(id: { eq: $id }) {
+      excerpt(pruneLength: 159)
       frontmatter {
         title
         author
@@ -48,3 +50,18 @@ export const query = graphql`
     }
   }
 `;
+
+export const Head: HeadFC<Queries.BlogPostQuery, unknown> = ({ data }) => {
+  const imageUrl =
+    data.mdx?.frontmatter?.featuredImage?.childImageSharp?.gatsbyImageData
+      .images.fallback?.src;
+
+  return (
+    <CustomHead
+      title={data.mdx?.frontmatter?.title || ''}
+      description={data.mdx?.excerpt || ''}
+      image={imageUrl}
+      article
+    />
+  );
+};

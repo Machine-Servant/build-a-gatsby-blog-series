@@ -1,6 +1,7 @@
 import { graphql, HeadFC, PageProps } from 'gatsby';
 import { getImage } from 'gatsby-plugin-image';
 import * as React from 'react';
+import { CustomHead } from '../components/custom-head';
 import { PageLayout } from '../components/page-layout';
 
 const IndexPage: React.FC<PageProps<Queries.IndexPageQuery>> = ({ data }) => {
@@ -29,4 +30,9 @@ export const pageQuery = graphql`
   }
 `;
 
-export const Head: HeadFC = () => <title>Home Page</title>;
+export const Head: HeadFC = () => (
+  <CustomHead
+    title="Home | My Gatsby Blog"
+    description="This is the home page to my blog. You should write a better description."
+  />
+);
